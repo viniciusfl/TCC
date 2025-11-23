@@ -1,0 +1,28 @@
+%!TeX root=../tese.tex
+%("dica" para o editor de texto: este arquivo é parte de um documento maior)
+% para saber mais: https://tex.stackexchange.com/q/78101
+
+%% ------------------------------------------------------------------------- %%
+
+% "\chapter" cria um capítulo com número e o coloca no sumário; "\chapter*"
+% cria um capítulo sem número e não o coloca no sumário. A introdução não
+% deve ser numerada, mas deve aparecer no sumário. Por conta disso, este
+% modelo define o comando "\chapter**".
+\chapter**{Introduction}
+\label{cap:introducao}
+
+\enlargethispage{.5\baselineskip}
+In recent years, advances in Natural Language Processing (NLP) and Artificial Intelligence (AI) have transformed the way researchers and industry professionals analyze, retrieve, and relate textual information. Central to these advances are embedding models, which are mathematical representations that encode the semantic meaning of text into numerical vectors. These representations serve as the backbone of modern retrieval, classification, and generation systems, enabling more semantic driven interpretations of human language than traditional keyword-based or statistical methods.
+
+As embedding models have matured, a growing body of research in software engineering has adopted them to address complex tasks such as duplicate bug report detection, vulnerability discovery, source code analysis, and requirements traceability. These studies consistently demonstrate that embeddings capture semantic and contextual relationships that would be difficult or impossible to model through handcrafted rules or surface-level text matching.
+
+From this tecnology, we raise important questions for both researchers and practitioners: \emph{to what extent does the choice of embedding model actually influence the final outcomes of a given task?} While new embedding models are released at an increasingly rapid pace, often accompanied by claims of marginal improvements, there remains a lack of studies evaluating whether these newer and different models differ in performance gains in real-world applications.
+
+A notable contribution to this discussion is DeeperMatcher, proposed by \textcite{pilone2024deepermatcher}, which leverages large language models and text embeddings to connect user feedback with development issues based on semantic similarity. The study highlights the effectiveness of embedding based similarity tasks to find relationships between reports and issues that would otherwise remain undetected by developers. However, its evaluation relies on a specific embedding model, leaving open the question of whether similar or better results could be achieved with alternative models.
+
+Motivated by this gap, the present work aims to replicate and extend aspects of DeeperMatcher’s methodology to investigate how different embedding models impact the performance of semantic similarity tasks in a software engineering context. Starting from the premise that embedding models often perform similarly, we systematically compare multiple embeddings models available in the market. Our goal is to determine whether the choice of embedding model significantly influences performance in practical applications.
+
+
+% --
+
+% Through quantitative evaluation and qualitative analysis, this research seeks not only to validate the robustness of embedding-based approaches but also to offer practical insights for researchers and practitioners choosing between competing embedding models. By clarifying the extent to which model selection affects outcomes, this study contributes to a deeper understanding of embeddings’ role in semantic similarity tasks and supports more informed decision-making in the design of NLP-driven software engineering tools.
