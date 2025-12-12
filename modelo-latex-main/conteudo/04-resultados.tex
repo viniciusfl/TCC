@@ -1,0 +1,100 @@
+%!TeX root=../tese.tex
+%("dica" para o editor de texto: este arquivo é parte de um documento maior)
+% para saber mais: https://tex.stackexchange.com/q/78101
+
+% Vamos definir alguns comandos auxiliares para facilitar.
+
+% "textbackslash" é muito comprido.
+\providecommand{\sla}{\textbackslash}
+
+% Vamos escrever comandos (como "make" ou "itemize") com formatação especial.
+\providecommand{\cmd}[1]{\textsf{#1}}
+
+% Idem para packages; aqui estamos usando a mesma formatação de \cmd,
+% mas poderíamos escolher outra.
+\providecommand{\pkg}[1]{\textsf{#1}}
+
+% A maioria dos comandos LaTeX começa com "\"; vamos criar um
+% comando que já coloca essa barra e formata com "\cmd".
+\providecommand{\ltxcmd}[1]{\cmd{\sla{}#1}}
+
+\chapter{Visualizing Semantic Spaces}
+
+This chapter presents and discusses the results from visualizing how each embedding model structures the semantic space of issues and reviews. Using t-SNE projections to examine high-dimensional embeddings in two dimensions, we analyze how different models organize these artifact types in the semantic space. The visualizations reveal how issues and reviews end up positioned far from each other, reflecting the different language used in each artifact type, complementing the quantitative similarity analysis and providing insights into how each model represents meaning in high-dimensional space.
+
+To complement the quantitative analysis, t-SNE visualizations were generated to examine how each embedding model structures the semantic space. These visualizations project high-dimensional embeddings into two dimensions while preserving local neighborhood relationships, allowing for qualitative inspection of how issues and reviews are positioned relative to each other in the semantic space.
+
+Figures~\ref{fig:tsne_jina} through~\ref{fig:tsne_cohere} show t-SNE projections for the anuke\_mindustry project across all five embedding models. These visualizations reveal how different models organize the semantic space and demonstrate that issues and reviews end up positioned far from each other, reflecting the different language characteristics used in each artifact type.
+
+\section{Jina Embeddings}
+
+Figure~\ref{fig:tsne_jina} shows the t-SNE projection using Jina embeddings. The visualization reveals two primary clusters: reviews (golden/brown) form a dense cluster on the left side, with two distinct sub-clusters visible, while issues (pink) cluster on the right side. The spatial separation between these clusters reflects how the different language used in issues and reviews results in their embeddings being positioned far apart in the semantic space. There is some intermixing in the central region, suggesting that some issues and reviews share semantic similarities despite their different linguistic characteristics.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/cluster/cluster_anuke_mindustry_jina_tsne}
+    \caption{t-SNE visualization of the semantic space for anuke\_mindustry project using Jina embeddings. Issues (pink) and reviews (golden) form distinct clusters with some central overlap.}
+    \label{fig:tsne_jina}
+\end{figure}
+
+\section{OpenAI Large Embeddings}
+
+The t-SNE projection using OpenAI Large (Figure~\ref{fig:tsne_openai_large}) shows strong spatial separation between issues and reviews. Reviews form a dense cluster on the left with a smaller sub-cluster in the bottom-left, while issues cluster on the right with a denser sub-cluster in the top-right. The central region shows minimal overlap, indicating that issues and reviews end up positioned far apart in the semantic space, reflecting the different language used in each artifact type. This strong separation aligns with the quantitative results, where OpenAI Large showed high sensitivity to semantic relationships. The model's ability to create distinct, well-separated clusters in the semantic space reflects its capacity to capture and distinguish linguistic differences between artifact types. When OpenAI Large does assign higher similarity scores to issue-review pairs (as observed in the relevance-level analysis, particularly at Level 3 where it showed the second-highest median similarity), it indicates genuine semantic relationships rather than spurious matches. The minimal overlap in the visualization corresponds to the model's conservative approach: it maintains clear boundaries between artifact types while still recognizing meaningful semantic connections when they exist, resulting in higher similarity scores for pairs that human evaluators considered moderately to highly relevant.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/cluster/cluster_anuke_mindustry_openai_large_tsne}
+    \caption{t-SNE visualization using OpenAI Large embeddings. Strong separation between issues and reviews with minimal overlap.}
+    \label{fig:tsne_openai_large}
+\end{figure}
+
+\section{OpenAI Small Embeddings}
+
+Figure~\ref{fig:tsne_openai_small} displays the t-SNE projection for OpenAI Small. Similar to OpenAI Large, this model shows clear spatial separation between issues (right cluster) and reviews (left cluster). The reviews cluster has a smaller isolated sub-cluster in the bottom-left, while the issues cluster shows high density around the center-right. The separation is strong, with the space around Dim 1 = 0 acting as a clear boundary between the two artifact types, demonstrating how the different language used in issues and reviews results in their embeddings being positioned far apart.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/cluster/cluster_anuke_mindustry_openai_small_tsne}
+    \caption{t-SNE visualization using OpenAI Small embeddings. Clear separation with distinct boundary between issues and reviews.}
+    \label{fig:tsne_openai_small}
+\end{figure}
+
+\section{Gemini Embeddings}
+
+The Gemini model (Figure~\ref{fig:tsne_gemini}) shows a different clustering pattern. Reviews form a large cluster on the left with an irregular shape and a smaller isolated sub-cluster in the bottom-left. Issues cluster on the right side. While the main clusters are separated, there are some outlier points where issues appear near the reviews cluster and vice versa. This pattern reflects how Gemini organizes the semantic space, with issues and reviews generally positioned far apart due to their different language characteristics.
+
+This spatial organization aligns with the quantitative findings where Gemini showed more conservative similarity scores at intermediate relevance levels. The presence of outlier points in the visualization, where some issues appear near the reviews cluster and vice versa, corresponds to Gemini's behavior in the quantitative analysis: while the model generally positions issues and reviews far apart (reflecting their different language), it assigns lower similarity scores even to pairs that human evaluators considered moderately relevant. This conservative approach contrasts with OpenAI Large's behavior: whereas OpenAI Large maintains clear boundaries while recognizing meaningful semantic connections (resulting in higher similarity scores for moderately relevant pairs), Gemini requires stronger semantic signals before assigning positive similarity values. This alignment between the structural organization of the semantic space and the similarity scoring behavior demonstrates consistency in how Gemini captures and represents linguistic differences between issues and reviews, though with a more conservative threshold than OpenAI Large.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/cluster/cluster_anuke_mindustry_gemini_tsne}
+    \caption{t-SNE visualization using Gemini embeddings. Distinct clusters with some outlier points indicating semantic overlap.}
+    \label{fig:tsne_gemini}
+\end{figure}
+
+\section{Cohere Embeddings}
+
+Figure~\ref{fig:tsne_cohere} shows the t-SNE projection for Cohere embeddings. The visualization reveals two well-separated clusters: a large, spread-out cluster of issues on the left and central regions, and a more compact cluster of reviews on the right. The reviews cluster forms a cohesive, oval-like shape, while the issues cluster is more diffuse. The clear separation with minimal overlap shows that issues and reviews end up positioned far apart in the semantic space, reflecting the different language used in each artifact type. 
+
+The diffuse nature of the issues cluster suggests that Cohere captures more nuances and differences between issues, indicating that the model better understands the technical language that developers use in issues. This diffusion reflects the variety of technical vocabulary, problem descriptions, and domain-specific terminology present in different issues, with Cohere's embeddings positioning them according to these linguistic subtleties rather than grouping them tightly together.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/cluster/cluster_anuke_mindustry_cohere_tsne}
+    \caption{t-SNE visualization using Cohere embeddings. Well-separated clusters with compact reviews cluster and more diffuse issues cluster.}image.png
+    \label{fig:tsne_cohere}
+\end{figure}
+
+\section{Comparative Analysis of Semantic Space Structure}
+
+The t-SNE visualizations reveal several important patterns:
+
+\begin{itemize}
+    \item \textbf{Universal spatial separation:} All five models show issues and reviews positioned far apart in the semantic space, forming distinct clusters. This separation reflects the different language used in each artifact type, with embedding models capturing these linguistic differences in their vector representations. The fact that this pattern appears consistently across all models suggests that the linguistic differences between issues and reviews are fundamental and well-captured by embedding models.
+    
+    \item \textbf{Varying cluster shapes:} While all models show spatial separation, they differ in cluster shapes and densities. OpenAI Large and OpenAI Small produce more compact, well-defined clusters, while Jina and Cohere show more diffuse distributions. Gemini shows intermediate behavior with some outlier points. These differences suggest that while all models capture the linguistic differences between artifact types, they organize the semantic space differently.
+    
+    \item \textbf{Sub-cluster patterns:} Several models (particularly Jina, OpenAI Large, and OpenAI Small) reveal sub-clusters within the main clusters, suggesting that these models capture finer-grained semantic distinctions within each artifact type. These sub-clusters may reflect different linguistic patterns or content characteristics. For example, within the reviews cluster, sub-clusters might group reviews that share similar language patterns, such as template-based reviews or reviews with specific linguistic structures. Similarly, within the issues cluster, sub-clusters might correspond to different types of issues (e.g., bug reports, feature requests) that use distinct language patterns. The presence of these sub-clusters demonstrates that embedding models capture not only the broad linguistic differences between issues and reviews, but also finer-grained semantic distinctions within each artifact type.
+    
+    \item \textbf{Alignment with quantitative results:} Models that showed stronger spatial separation in the visualizations (OpenAI Large, OpenAI Small) also tended to show higher similarity scores at intermediate relevance levels in the quantitative analysis, suggesting consistency between how models organize the semantic space and how they assign similarity scores.
+\end{itemize}

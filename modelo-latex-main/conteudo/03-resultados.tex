@@ -1,0 +1,113 @@
+%!TeX root=../tese.tex
+%("dica" para o editor de texto: este arquivo é parte de um documento maior)
+% para saber mais: https://tex.stackexchange.com/q/78101
+
+% Vamos definir alguns comandos auxiliares para facilitar.
+
+% "textbackslash" é muito comprido.
+\newcommand{\sla}{\textbackslash}
+
+% Vamos escrever comandos (como "make" ou "itemize") com formatação especial.
+\newcommand{\cmd}[1]{\textsf{#1}}
+
+% Idem para packages; aqui estamos usando a mesma formatação de \cmd,
+% mas poderíamos escolher outra.
+\newcommand{\pkg}[1]{\textsf{#1}}
+
+% A maioria dos comandos LaTeX começa com "\"; vamos criar um
+% comando que já coloca essa barra e formata com "\cmd".
+\newcommand{\ltxcmd}[1]{\cmd{\sla{}#1}}
+
+\chapter{Similarity and Relevance}
+
+This chapter presents and discusses the results obtained from analyzing how similarity scores computed by five embedding models correlate with human-assigned relevance levels. The analysis addresses whether different embedding models successfully capture semantic relationships aligned with human judgment, examining how similarity scores vary across the six relevance levels (1-5) assigned by practitioners. We present the quantitative findings organized by relevance level, followed by a comparative discussion of patterns observed across models.
+
+\section{Similarity Scores by Relevance Level}
+
+To evaluate how well each embedding model captures semantic relationships aligned with human judgment, similarity scores were analyzed across the six relevance levels (1-5) assigned by practitioners. The expectation is that higher relevance levels should correspond to higher cosine similarity scores, indicating that models successfully distinguish between relevant and irrelevant matches.
+
+\subsection{No Relevance (Level 0)}
+
+Figure~\ref{fig:pertinence_level_0} shows the distribution of normalized similarity scores for issue-review pairs rated as having no relevance (Level 0). Across all five models, the median similarity scores are consistently negative, ranging from approximately -0.3 to -0.5. This pattern indicates that all models successfully identify non-relevant pairs by assigning lower similarity scores, which aligns with the expected behavior.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/pertinence_level_0}
+    \caption{Normalized similarity scores for relevance level 0 (no relevance) across five embedding models. All models show negative medians, indicating successful identification of non-relevant pairs.}
+    \label{fig:pertinence_level_0}
+\end{figure}
+
+The interquartile ranges are relatively similar across models, typically spanning from approximately -1.0 to 0.1 or 0.2. This consistency suggests that, despite architectural differences, all models converge on similar similarity distributions for clearly irrelevant matches. The presence of some outliers, particularly in Jina and Gemini, indicates occasional false positives where non-relevant pairs received unexpectedly high similarity scores.
+
+\subsection{Low Relevance (Levels 1--2)}
+
+For Level 1 (Figure~\ref{fig:pertinence_level_1}), all models exhibit median similarity scores close to zero or slightly negative. Jina shows the highest median (approximately 0.0), while OpenAI Small has the lowest (approximately -0.3). The distributions show considerable overlap, with interquartile ranges spanning both negative and positive values. This suggests that at low relevance levels, models struggle to consistently distinguish between marginally relevant and irrelevant pairs.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/pertinence_level_1}
+    \caption{Normalized similarity scores for relevance level 1 (low relevance) across five embedding models. Median scores cluster around zero, indicating difficulty in distinguishing low-relevance pairs.}
+    \label{fig:pertinence_level_1}
+\end{figure}
+
+At Level 2 (Figure~\ref{fig:pertinence_level_2}), a clearer separation begins to emerge. Jina shows the highest median (approximately 0.25), followed by OpenAI Small (approximately 0.15) and OpenAI Large (approximately 0.1). In contrast, Gemini and Cohere exhibit negative medians (approximately -0.2), indicating that these models assign lower similarity scores even to pairs with moderate relevance. This divergence suggests that different models may have varying thresholds for what constitutes meaningful semantic similarity.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/pertinence_level_2}
+    \caption{Normalized similarity scores for relevance level 2 (moderate relevance) across five embedding models. Jina, OpenAI Large, and OpenAI Small show positive medians, while Gemini and Cohere remain negative.}
+    \label{fig:pertinence_level_2}
+\end{figure}
+
+\subsection{Medium Relevance (Level 3)}
+
+Level 3 (Figure~\ref{fig:pertinence_level_3}) reveals the most significant differences between models. Jina and OpenAI Large show the highest median similarity scores (approximately 0.35 and 0.25, respectively), with their interquartile ranges largely above zero. OpenAI Small and Cohere exhibit medians closer to zero (approximately 0.15 and 0.0), while Gemini shows a negative median (approximately -0.15).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/pertinence_level_3}
+    \caption{Normalized similarity scores for relevance level 3 (medium relevance) across five embedding models. Jina and OpenAI Large show higher medians, indicating better alignment with human judgment at this relevance level.}
+    \label{fig:pertinence_level_3}
+\end{figure}
+
+This pattern suggests that Jina and OpenAI Large are more sensitive to moderate semantic relationships, assigning higher similarity scores to pairs that human evaluators considered moderately relevant. The negative median for Gemini at this level is particularly noteworthy, as it indicates that this model may require stronger semantic signals before assigning positive similarity scores.
+
+\subsection{High Relevance (Levels 4--5)}
+
+At Level 4 (Figure~\ref{fig:pertinence_level_4}), all models show positive median similarity scores, ranging from approximately 0.3 to 0.5. Jina and OpenAI Small exhibit the highest medians (approximately 0.5), followed by OpenAI Large (approximately 0.4), Gemini (approximately 0.3), and Cohere (approximately 0.3). The convergence toward positive values indicates that all models successfully identify highly relevant pairs, though with varying degrees of confidence.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/pertinence_level_4}
+    \caption{Normalized similarity scores for relevance level 4 (high relevance) across five embedding models. All models show positive medians, indicating successful identification of highly relevant pairs.}
+    \label{fig:pertinence_level_4}
+\end{figure}
+
+For Level 5 (Figure~\ref{fig:pertinence_level_5}), representing the highest relevance, all models show remarkably similar median similarity scores clustered around 0.6--0.7. This convergence suggests that when semantic relationships are strong and unambiguous, all models produce comparable results. The interquartile ranges are also similar across models, typically spanning from approximately 0.0 to 1.2, indicating consistent behavior for clearly relevant pairs.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/pertinence_level_5}
+    \caption{Normalized similarity scores for relevance level 5 (very high relevance) across five embedding models. All models show similar medians ($\approx$0.6), indicating convergence for strongly relevant pairs.}
+    \label{fig:pertinence_level_5}
+\end{figure}
+
+\section{Discussions}
+
+The analysis across relevance levels reveals several important patterns:
+
+\begin{itemize}
+    \item \textbf{Convergence at extremes:} At both ends of the relevance spectrum (Levels 0 and 5), all models show similar behavior. This suggests that when semantic relationships are clearly strong or clearly absent, different embedding models produce comparable results.
+    
+    \item \textbf{Divergence at intermediate levels:} The most significant differences between models occur at intermediate relevance levels (Levels 2--3). Jina and OpenAI Large consistently show higher similarity scores at these levels, while Gemini tends to be more conservative, assigning lower scores even to moderately relevant pairs.
+    
+    \item \textbf{Consistent ordering:} Across most relevance levels, Jina and OpenAI Large tend to rank highest, followed by OpenAI Small, with Gemini and Cohere showing lower medians. This ordering suggests that model capacity and architecture may influence sensitivity to semantic relationships.
+    
+    \item \textbf{Overall correlation with human judgment:} Despite differences in absolute scores, all models show a positive trend: similarity scores generally increase as relevance levels increase, indicating that all models capture some aspect of semantic relevance aligned with human judgment.
+\end{itemize}
+
+\subsection{The Challenge of Low-Relevance Distinction}
+
+A particularly important finding that emerges from the analysis across all relevance levels is that embedding models struggle to consistently distinguish between marginally relevant and irrelevant pairs. This difficulty is most evident at Level 1, where all models exhibit median similarity scores clustered around zero, with distributions spanning both negative and positive values. This pattern is also corroborated by the behavior observed at Levels 2 and 3, where models diverge significantly in their assessments - some models (notably Gemini) still assign negative similarity scores to pairs that human evaluators considered moderately relevant, while others (Jina and OpenAI Large) assign positive scores.
+
+This divergence at intermediate relevance levels highlights a fundamental limitation: different embedding models have varying thresholds for what constitutes meaningful semantic similarity, and these thresholds do not always align with human judgment, particularly for borderline cases. The convergence observed at extreme relevance levels (Levels 0 and 5) contrasts sharply with this divergence, suggesting that while embedding models are reliable for clearly strong or clearly absent semantic relationships, they require careful selection when dealing with the nuanced cases that often arise in real-world software engineering scenarios.

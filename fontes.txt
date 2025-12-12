@@ -1,0 +1,6 @@
+HYDBre: A Hybrid Retrieval Method for Detecting Duplicate Software Bug Reports - https://ieeexplore.ieee.org/document/10818310/
+
+
+SICode: Embedding-Based Subgraph Isomorphism Identification for Bug Detection - https://ieeexplore.ieee.org/document/10556446
+
+Detecting Hard-Coded Credentials in Software Repositories via LLMs - https://dl.acm.org/doi/10.1145/3744756

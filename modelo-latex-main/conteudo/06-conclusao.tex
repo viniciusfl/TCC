@@ -1,0 +1,42 @@
+%!TeX root=../tese.tex
+%("dica" para o editor de texto: este arquivo é parte de um documento maior)
+% para saber mais: https://tex.stackexchange.com/q/78101
+
+\chapter{Conclusion}
+
+This work investigated whether the choice of embedding model significantly influences the performance of semantic similarity tasks in software engineering, specifically in the context of matching user reviews with development issues. Through a systematic comparison of five embedding models (Jina, OpenAI Large, OpenAI Small, Gemini, and Cohere) across four software projects, we addressed the fundamental question raised in the introduction: \emph{to what extent does the choice of embedding model actually influence the final outcomes of a given task?}
+
+\section{Main Findings}
+
+Our analysis reveals a nuanced answer: while embedding models show remarkable convergence at the extremes of the relevance spectrum, they exhibit meaningful differences at intermediate levels and in overall similarity score distributions. This finding has important implications for both researchers and practitioners.
+
+At the extremes - clearly irrelevant pairs (Level 0) and highly relevant pairs (Level 5) - all five models produce comparable results. This convergence suggests that when semantic relationships are unambiguous, different embedding models capture similar patterns, validating the general approach of using embeddings for semantic similarity tasks in software engineering. However, at intermediate relevance levels (Levels 2--3), significant differences emerge. Jina and OpenAI Large consistently assign higher similarity scores to moderately relevant pairs, while Gemini and Cohere tend to be more conservative, requiring stronger semantic signals before assigning positive similarity scores.
+
+The distribution analysis across all issue-review pairs reveals consistent patterns: Gemini and Jina consistently outperform other models in terms of both median similarity scores and consistency across projects, while Cohere shows a more conservative approach that may reduce false positives but potentially increase false negatives. These patterns hold across different projects, suggesting that model characteristics (architecture, training data, optimization objectives) have a stronger influence on similarity scoring than project-specific factors.
+
+The t-SNE visualizations confirm that all models successfully separate issues and reviews into distinct clusters, demonstrating that embedding models capture characteristics that differentiate these artifact types. However, the structural organization varies: OpenAI models produce more compact, well-defined clusters, while Jina and Cohere show more diffuse distributions. These structural differences align with the quantitative findings, suggesting consistency between how models organize semantic space and how they assign similarity scores.
+
+\section{Implications for Practice}
+
+The findings suggest that model selection matters most when dealing with ambiguous or borderline cases, where semantic relationships are less clear-cut. For strongly relevant or clearly irrelevant pairs, the choice of embedding model appears to have less impact on the final outcomes. This has practical implications:
+
+\begin{itemize}
+    \item \textbf{For applications requiring high precision:} Models like Gemini and Jina, which show higher similarity scores and tighter distributions, may be preferable when the goal is to identify highly relevant matches with confidence.
+    
+    \item \textbf{For applications requiring high recall:} More conservative models like Cohere may be suitable when minimizing false positives is critical, though this may come at the cost of missing some relevant matches.
+    
+    \item \textbf{For borderline cases:} The significant differences at intermediate relevance levels suggest that practitioners should carefully consider their tolerance for false positives and false negatives when selecting an embedding model, particularly when dealing with ambiguous semantic relationships.
+    
+    \item \textbf{For cost-sensitive applications:} The similar performance of OpenAI Large and OpenAI Small suggests that the smaller model may be sufficient for many use cases, potentially reducing computational costs and API expenses.
+    
+    \item \textbf{Consensus-based filtering:} An interesting approach emerging from our findings is to use consensus between models as a quality filter. By only considering matches that are marked as relevant by all (or a majority of) models, practitioners can potentially achieve higher precision, as matches agreed upon by multiple models are more likely to represent genuine semantic relationships. This consensus approach leverages the convergence observed at extreme relevance levels, where models tend to agree, while filtering out ambiguous cases where models diverge.
+\end{itemize}
+
+\section{Final Remarks}
+
+This work contributes to the growing body of research on embedding models in software engineering by providing empirical evidence on how different models behave in semantic similarity tasks. The consistent positive correlation between similarity scores and human-assigned relevance levels across all models validates the general approach of using embeddings for semantic similarity tasks. However, the observed differences at intermediate levels and in distribution patterns demonstrate that embedding models do not perform similarly and must be chosen carefully based on the specific requirements of each application.
+
+The finding that model selection matters more for ambiguous cases than for clear-cut ones highlights the importance of understanding model characteristics when dealing with borderline semantic relationships. Different models exhibit distinct behaviors: some are more sensitive to moderate semantic relationships, while others require stronger signals before assigning positive similarity scores. These differences are not trivial and can meaningfully impact the outcomes of semantic similarity tasks.
+
+Ultimately, this study demonstrates that while embedding models share fundamental capabilities for capturing semantic relationships, they are not interchangeable. The choice of model can meaningfully impact outcomes, particularly in scenarios where semantic relationships are ambiguous or where precision and recall requirements differ. Practitioners and researchers must therefore carefully evaluate and select embedding models based on their specific use case, tolerance for false positives and false negatives, and the characteristics of the semantic relationships they aim to capture.
+

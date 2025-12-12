@@ -104,11 +104,11 @@
 \let\Coadvisor\coorientador
 
 % Para TCCs, este comando define o supervisor
-\Advisor{Prof. Paulo Roberto Miranda Meirelles}
+\Advisor{Arthur Pilone Maia da Silva}
 
 % Se não houver, remova; se houver mais de um, basta
 % repetir o comando quantas vezes forem necessárias
-\Coadvisor{Arthur Pilone Maia da Silva}
+\Coadvisor{Prof. Paulo Roberto Miranda Meirelles}
 % \coorientador[fem]{\profa{} \dra{} Beltrana de Tal}
 
 % \banca{
@@ -295,13 +295,13 @@ Furthermore, I would like to thank my family and friends for their support and u
 
 % Você pode escolher se quer ou não permitir a quebra de página
 %\listoftables
-\disablenewpage{\listoftables}
+%\disablenewpage{\listoftables}
 
 % Esta lista é criada "automaticamente" pela package float quando
 % definimos o novo tipo de float "program" (em utils.tex)
 % Você pode escolher se quer ou não permitir a quebra de página
 %\listof{program}{\programlistname}
-\disablenewpage{\listof{program}{\programlistname}}
+%\disablenewpage{\listof{program}{\programlistname}}
 
 % Sumário (obrigatório)
 \tableofcontents
@@ -312,20 +312,20 @@ Furthermore, I would like to thank my family and friends for their support and u
 % pois o índice é opcional). É comum colocar esses itens no final do documento,
 % junto com o comando \printindex, mas em alguns casos isso torna necessário
 % executar texindy (ou makeindex) mais de uma vez, então colocar aqui é melhor.
-\index{Inglês|see{Língua estrangeira}}
-\index{Figuras|see{Floats}}
-\index{Tabelas|see{Floats}}
-\index{Código-fonte|see{Floats}}
-\index{Subcaptions|see{Subfiguras}}
-\index{Sublegendas|see{Subfiguras}}
-\index{Equações|see{Modo matemático}}
-\index{Fórmulas|see{Modo matemático}}
-\index{Rodapé, notas|see{Notas de rodapé}}
-\index{Captions|see{Legendas}}
-\index{Versão original|see{Tese/Dissertação, versões}}
-\index{Versão corrigida|see{Tese/Dissertação, versões}}
-\index{Palavras estrangeiras|see{Língua estrangeira}}
-\index{Floats!Algoritmo|see{Floats, ordem}}
+%\index{Inglês|see{Língua estrangeira}}
+%\index{Figuras|see{Floats}}
+%\index{Tabelas|see{Floats}}
+%\index{Código-fonte|see{Floats}}
+%\index{Subcaptions|see{Subfiguras}}
+%\index{Sublegendas|see{Subfiguras}}
+%\index{Equações|see{Modo matemático}}
+%\index{Fórmulas|see{Modo matemático}}
+%\index{Rodapé, notas|see{Notas de rodapé}}
+%\index{Captions|see{Legendas}}
+%\index{Versão original|see{Tese/Dissertação, versões}}
+%\index{Versão corrigida|see{Tese/Dissertação, versões}}
+%\index{Palavras estrangeiras|see{Língua estrangeira}}
+%\index{Floats!Algoritmo|see{Floats, ordem}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CAPÍTULOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -346,8 +346,10 @@ Furthermore, I would like to thank my family and friends for their support and u
 \pagestyle{mainmatter}
 \input{conteudo/01-conteudos-relacionados}
 \input{conteudo/02-dados-e-metodos}
-\input{conteudo/04-exemplo-tutorial}
-\input{conteudo/05-exemplo-exemplos}
+\input{conteudo/05-resultados}
+\input{conteudo/03-resultados}
+\input{conteudo/04-resultados}
+\input{conteudo/06-conclusao}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% APÊNDICES E ANEXOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -381,29 +383,23 @@ Furthermore, I would like to thank my family and friends for their support and u
 
 \appendix
 
-% \addappheadtotoc acrescenta a palavra "Apêndice" ao sumário; se
-% só há apêndices, sem anexos, provavelmente não é necessário.
-\addappheadtotoc
-
-\input{conteudo/apendice-exemplo-faq}
-\par
 
 %%%% Anexos %%%%
 
-\cleardoublepage
+%\cleardoublepage
 
-\pagestyle{appendix} % repete o anterior, caso você não use apêndices
+%\pagestyle{appendix} % repete o anterior, caso você não use apêndices
 
-\annex
+%\annex
 
 % \addappheadtotoc acrescenta a palavra "Anexo" ao sumário; se
 % só há anexos, sem apêndices, provavelmente não é necessário.
-\addappheadtotoc
+%\addappheadtotoc
 
-\input{conteudo/anexo-exemplo-imegoodies}
-\par
-\input{conteudo/anexo-exemplo-pseudocodigo}
-\par
+%\input{conteudo/anexo-exemplo-imegoodies}
+%\par
+%\input{conteudo/anexo-exemplo-pseudocodigo}
+%\par
 
 
 %%%%%%%%%%%%%%% SEÇÕES FINAIS (BIBLIOGRAFIA E ÍNDICE REMISSIVO) %%%%%%%%%%%%%%%%
@@ -424,6 +420,6 @@ Furthermore, I would like to thank my family and friends for their support and u
   heading=bibintoc, % Inclui a bibliografia no sumário
 ]
 
-\printindex % imprime o índice remissivo no documento (opcional)
+%\printindex % imprime o índice remissivo no documento (opcional)
 
 \end{document}

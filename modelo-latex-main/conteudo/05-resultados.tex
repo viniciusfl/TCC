@@ -1,0 +1,111 @@
+%!TeX root=../tese.tex
+%("dica" para o editor de texto: este arquivo é parte de um documento maior)
+% para saber mais: https://tex.stackexchange.com/q/78101
+
+% Vamos definir alguns comandos auxiliares para facilitar.
+
+% "textbackslash" é muito comprido.
+\providecommand{\sla}{\textbackslash}
+
+% Vamos escrever comandos (como "make" ou "itemize") com formatação especial.
+\providecommand{\cmd}[1]{\textsf{#1}}
+
+% Idem para packages; aqui estamos usando a mesma formatação de \cmd,
+% mas poderíamos escolher outra.
+\providecommand{\pkg}[1]{\textsf{#1}}
+
+% A maioria dos comandos LaTeX começa com "\"; vamos criar um
+% comando que já coloca essa barra e formata com "\cmd".
+\providecommand{\ltxcmd}[1]{\cmd{\sla{}#1}}
+
+\chapter{Similarity Score Distributions}
+
+This chapter presents and discusses the distributions of similarity scores across the entire dataset, examining how different embedding models assign similarity values to issue-review pairs. Unlike the relevance-level analysis which focused on human-labeled pairs, this analysis considers all computed similarities, revealing how models behave across the full spectrum of potential matches. We present histogram and violin plot visualizations for each project, followed by a discussion of cross-project patterns and their implications for model selection in practice.
+
+To gain deeper insight into how different embedding models assign similarity scores across the entire dataset, we analyzed the distributions of similarity scores for each project. These distributions reveal how models behave across the full range of issue-review pairs, not just those with human-assigned relevance labels.
+
+\section{Overall Similarity Distributions}
+
+Figure~\ref{fig:similarity_distributions} shows histogram distributions of similarity scores across all four projects. The distributions reveal important differences in how models assign similarity values:
+
+\begin{itemize}
+    \item \textbf{Project-specific patterns:} Each project shows distinct distribution characteristics. For example, \texttt{wordpress\_android} and \texttt{fsck\_k9} show narrower, more concentrated distributions with peaks around 7000--12000 matches suggested at certain similarity score ranges, while \texttt{anuke\_mindustry} and \texttt{ppsspp\_ppsspp} show broader distributions with lower peak frequencies, indicating fewer matches suggested at any given similarity score range.
+    
+    \item \textbf{Model-specific shifts:} Across projects, certain models consistently shift distributions. Cohere and Gemini tend to produce distributions shifted toward lower (more negative) similarity scores, while Jina, OpenAI Large, and OpenAI Small show distributions shifted toward higher (more positive) scores.
+    
+    \item \textbf{Distribution shapes:} Most distributions are approximately bell-shaped and centered around zero, suggesting that similarity scores follow a normal-like distribution. However, the width and peak locations vary significantly between models and projects.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{figuras/violin/violin/normalized}
+    \caption{Histogram distributions of similarity scores across four projects for all five embedding models. Each subplot shows the frequency distribution of similarity scores, revealing project-specific and model-specific patterns.}
+    \label{fig:similarity_distributions}
+\end{figure}
+
+\section{Reviews per Similarity by Project}
+
+To examine how similarity scores are distributed specifically for reviews matched to issues, violin plots were generated for each project. These plots show the probability density of similarity percentages, providing insight into model behavior at the project level. All violin plots follow a consistent order of models (from left to right: Jina, Gemini, Cohere, OpenAI Large, OpenAI Small) to facilitate comparison across different projects.
+
+\subsection{Wordpress Android}
+
+Figure~\ref{fig:violin_wordpress} shows the similarity distribution for the \texttt{Wordpress Android} project. Jina shows a median similarity of approximately 70\%, followed by Gemini with the highest median (approximately 75\%). Cohere shows a significantly lower median (approximately 45--48\%), while OpenAI Large and OpenAI Small show similar medians (approximately 45--48\%) with very similar distributions. The violin shapes reveal that Jina and Gemini have tighter, more concentrated distributions at higher similarity values, while Cohere and the OpenAI models show broader distributions centered at lower similarity percentages.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/violin/violin/violin}
+    \caption{Violin plot showing similarity score distributions for Wordpress Android project. Gemini and Jina show higher medians and tighter distributions compared to other models.}
+    \label{fig:violin_wordpress}
+\end{figure}
+
+\subsection{Mindustry}
+
+For the \texttt{Mindustry} project (Figure~\ref{fig:violin_anuke}), Jina shows a median similarity of approximately 62--63\%, followed by Gemini with the highest median (approximately 70--71\%). Cohere consistently shows the lowest median (approximately 32--33\%) with a narrow distribution, while OpenAI Large and OpenAI Small show moderate medians (approximately 47--51\%). This pattern suggests that Cohere is particularly conservative in assigning similarity scores for this project.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/violin/violin/violin2}
+    \caption{Violin plot for Mindustry project. Gemini and Jina outperform other models, while Cohere shows consistently lower similarity scores.}
+    \label{fig:violin_anuke}
+\end{figure}
+
+\subsection{K9 Mail}
+
+The \texttt{K9 Mail} project (Figure~\ref{fig:violin_fsck}) shows Jina with a median around 70--75\%, followed by Gemini with the highest median (approximately 75--78\%) and the tightest distribution, indicating very consistent high similarity scores. Cohere shows a median of approximately 50--60\% with wider, more variable distributions, while OpenAI Large shows a similar median (approximately 50--60\%) and OpenAI Small shows moderate performance (approximately 60--65\%). The violin shapes reveal that Jina and Gemini have particularly narrow and concentrated distributions, suggesting high consistency in their similarity assignments.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/violin/violin/violin3}
+    \caption{Violin plot for fsck\_k9 project. Gemini shows the highest median and tightest distribution, indicating consistent high performance.}
+    \label{fig:violin_fsck}
+\end{figure}
+
+\subsection{PPSSPP}
+
+For the \texttt{PPSSPP} project (Figure~\ref{fig:violin_ppsspp}), Jina shows a median of approximately 70\% with a relatively tight distribution, followed by Gemini with the highest median (approximately 80\%) and the tightest distribution, concentrated between 70\% and 90\%. Cohere shows a lower median (approximately 50\%) with broader distributions, while OpenAI Large shows a similar median (approximately 50\%) with the widest range, occasionally producing very low similarity scores. OpenAI Small shows moderate performance (approximately 57\%).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/violin/violin/violin4}
+    \caption{Violin plot for PPSSPP project. Gemini shows exceptional performance with highest median and tightest distribution, while Jina follows closely.}
+    \label{fig:violin_ppsspp}
+\end{figure}
+
+\subsection{Cross-Project Patterns}
+
+The violin plot analysis reveals consistent patterns across projects:
+
+\begin{itemize}
+    \item \textbf{Gemini's consistent behavior:} Across all four projects, Gemini consistently shows the highest median similarity scores and often the tightest distributions. This indicates that Gemini assigns higher similarity values more consistently than other models, though whether this is desirable depends on the application context: higher similarity scores may capture more relevant matches but could also increase false positives.
+    
+    \item \textbf{Jina's consistent behavior:} Jina consistently shows the second-highest median similarity scores across projects, with medians higher than OpenAI models and Cohere, and relatively tight distributions. Like Gemini, Jina's tendency to assign higher similarity scores suggests a more generous approach to semantic matching.
+    
+    \item \textbf{OpenAI model similarity:} OpenAI Large and OpenAI Small show very similar performance patterns across projects, with medians typically in the 45--60\% range and broader distributions compared to Gemini and Jina. This similarity suggests that model size may have less impact on similarity scoring behavior than other factors.
+    
+    \item \textbf{Cohere's conservative scoring:} Cohere consistently shows lower similarity scores across projects, with particularly low medians in \texttt{anuke\_mindustry} and \texttt{ppsspp\_ppsspp}. This conservative approach may result in fewer false positives but potentially more false negatives, as the model requires stronger semantic signals before assigning high similarity values.
+    
+    \item \textbf{Project-specific variations:} While the relative ordering of models by median similarity remains relatively consistent across projects, the absolute similarity values and distribution widths vary significantly between projects, suggesting that project characteristics influence how models assign similarity scores.
+\end{itemize}
+
+These distribution analyses complement the relevance-level analysis by showing how models behave across the entire similarity spectrum, not just for pairs with human-assigned labels. The consistent patterns across projects suggest that model characteristics (architecture, training data, optimization objectives) have a stronger influence on similarity scoring than project-specific factors.
+
