@@ -5,18 +5,18 @@
 % Vamos definir alguns comandos auxiliares para facilitar.
 
 % "textbackslash" é muito comprido.
-\newcommand{\sla}{\textbackslash}
+\providecommand{\sla}{\textbackslash}
 
 % Vamos escrever comandos (como "make" ou "itemize") com formatação especial.
-\newcommand{\cmd}[1]{\textsf{#1}}
+\providecommand{\cmd}[1]{\textsf{#1}}
 
 % Idem para packages; aqui estamos usando a mesma formatação de \cmd,
 % mas poderíamos escolher outra.
-\newcommand{\pkg}[1]{\textsf{#1}}
+\providecommand{\pkg}[1]{\textsf{#1}}
 
 % A maioria dos comandos LaTeX começa com "\"; vamos criar um
 % comando que já coloca essa barra e formata com "\cmd".
-\newcommand{\ltxcmd}[1]{\cmd{\sla{}#1}}
+\providecommand{\ltxcmd}[1]{\cmd{\sla{}#1}}
 
 \chapter{Similarity and Relevance}
 
